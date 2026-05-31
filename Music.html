@@ -6,9 +6,7 @@
     <title>RICHES-BLOG MUSIC</title>
     <link rel="icon" type="image/x-icon" href="favicon.jpg">
     
-    <!-- Bootstrap 5.3.2 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
 
     <style>
@@ -98,6 +96,7 @@
             border-radius: 4px;
             position: relative;
             transition: width 0.1s linear;
+            pointer-events: none; /* Prevents visual glitches when clicking near the edge */
         }
 
         /* Utilities */
@@ -115,7 +114,6 @@
 </head>
 <body>
 
-    <!-- Header / Nav Architecture -->
     <header class="mb-4">
         <nav class="navbar navbar-expand-lg glass-panel mt-3 mx-2 mx-md-4 px-3">
             <div class="container-fluid">
@@ -141,10 +139,8 @@
         </nav>
     </header>
 
-    <!-- Main Content Framework -->
     <main class="container my-5">
         
-        <!-- Category Segment -->
         <section class="glass-panel p-4 mb-5 shadow-lg">
             <h2 class="h4 mb-4 text-white d-flex align-items-center">
                 <i class="bi bi-tags-fill me-2 text-info"></i> Music Categories
@@ -162,26 +158,22 @@
             </div>
         </section>
 
-        <!-- Player Segment -->
-        <section class="max-width-md mx-auto" style="max-width: 650px;">
+        <section class="mx-auto" style="max-width: 650px;">
             <h1 class="h3 mb-4 fw-bold text-center tracking-wide text-uppercase">Now Playing</h1>
 
             <div class="glass-panel glass-player-card p-4 shadow-lg d-flex flex-column flex-md-row align-items-center gap-4">
                 
-                <!-- Album Artwork -->
                 <div class="music-cover-wrapper flex-shrink-0">
                     <img src="cover.jpg" alt="Music Cover">
                 </div>
                 
-                <!-- Track Meta and Dynamic Controls -->
                 <div class="w-100">
                     <div class="text-center text-md-start mb-3">
                         <h2 class="h4 mb-1 text-white fw-bold">My People</h2>
                         <p class="text-white-50 mb-0">Blaq Symbol</p>
                     </div>
 
-                    <!-- Scrub Interactive Timeline Slider -->
-                    <div class="progress-container mb-2" id="progress-container">
+                    <div class="progress-container mb-2" id="progress-container" title="Click to seek">
                         <div class="progress-bar-filled" id="progress-bar"></div>
                     </div>
                     <div class="d-flex justify-content-between text-white-50 small mb-3">
@@ -189,7 +181,6 @@
                         <span id="duration-time">0:00</span>
                     </div>
 
-                    <!-- Player Trigger Systems -->
                     <div class="d-flex align-items-center justify-content-center justify-content-md-start gap-3">
                         <button class="btn btn-light rounded-pill px-4 d-flex align-items-center gap-2 fw-semibold" id="play-pause-button">
                             <i class="bi bi-play-fill fs-5" id="play-icon"></i> <span id="play-text">Play</span>
@@ -200,13 +191,11 @@
                     </div>
                 </div>
 
-                <!-- Invisible Underlying Native Audio Controller Element -->
                 <audio id="music-audio" src="Blaq_Symbol_-_My_People_(RichesBosses.com)_.mp3"></audio>
             </div>
         </section>
     </main>
 
-    <!-- Footer Structural Element -->
     <footer class="glass-panel mx-2 mx-md-4 my-4 p-4 text-center shadow">
         <div class="social-links d-flex justify-content-center gap-4 mb-3">
             <a href="https://www.x.com/am_deejay_alex" target="_blank" title="X (Twitter)"><i class="bi bi-twitter-x"></i></a>
@@ -217,10 +206,8 @@
         <p class="mb-0 text-white-50">&copy; 2026 Riches Bosses Blog. All rights reserved.</p>
     </footer>
 
-    <!-- Bootstrap 5.3.2 Bundled Framework Engines -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Interactive Native Audio UI Synchronization Logic Script -->
     <script>
         const audio = document.getElementById('music-audio');
         const playPauseBtn = document.getElementById('play-pause-button');
