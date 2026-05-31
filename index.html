@@ -1,226 +1,330 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<link rel="stylesheet" type="text/css" href="styles.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-<link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
-<link rel="icon" type="image/x-icon" href="favicon.png">
-	<title>RICHES BOSSES BLOG</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RICHES BOSSES BLOG</title>
+    <link rel="icon" type="image/x-icon" href="favicon.png">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
+
+    <style>
+        /* Base Liquid-Glass Styling */
+        body {
+            background: url('log.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+        }
+
+        #background-video {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            min-width: 100%;
+            min-height: 100%;
+            z-index: -100;
+            object-fit: cover;
+            opacity: 0.6;
+        }
+
+        /* Glassmorphism Core */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(16px) saturate(120%);
+            -webkit-backdrop-filter: blur(16px) saturate(120%);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        /* Liquid Glass / Fluid hover gloss effect */
+        .glass-card-interactive {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card-interactive::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent,
+                rgba(255, 255, 255, 0.1) 45%,
+                rgba(255, 255, 255, 0.3) 50%,
+                transparent 55%
+            );
+            transform: rotate(30deg) translate(-50%, -50%);
+            transition: none;
+            pointer-events: none;
+        }
+
+        .glass-card-interactive:hover::before {
+            transform: rotate(30deg) translate(50%, 50%);
+            transition: transform 0.8s ease-in-out;
+        }
+
+        .glass-card-interactive:hover {
+            transform: translateY(-5px) scale(1.01);
+            background: rgba(255, 255, 255, 0.13);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 12px 40px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        /* Form Controls Customization */
+        .glass-input {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff !important;
+            backdrop-filter: blur(5px);
+        }
+
+        .glass-input:focus {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+
+        .glass-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Nav links & custom updates */
+        .nav-link {
+            color: rgba(255, 255, 255, 0.75) !important;
+            transition: color 0.3s;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #ffffff !important;
+            text-shadow: 0 0 8px rgba(255,255,255,0.6);
+        }
+
+        .social-links a {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.25rem;
+            transition: transform 0.3s, color 0.3s;
+            display: inline-block;
+        }
+
+        .social-links a:hover {
+            color: #ffffff;
+            transform: scale(1.2);
+        }
+
+        /* Tabs styling adjustment */
+        .nav-tabs {
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+        }
+        .nav-tabs .nav-link {
+            border: none !important;
+            background: transparent !important;
+        }
+        .nav-tabs .nav-link.active {
+            border-bottom: 2px solid #fff !important;
+            color: #fff !important;
+        }
+
+        /* Carousel Image Tuning */
+        .carousel-img {
+            height: 400px;
+            object-fit: cover;
+            border-radius: 12px;
+        }
+    </style>
 </head>
 <body>
 
-	<!-- Header Section -->
-	<video autoplay muted loop id="background-video">
-<source src="background-video.mp4" type="video/mp4">
-Your browser does not support the video tag.
-</video>
-<!-- ... -->
-<header style="background-image: url('backgroundd.jpg'); background-size: cover; background-position: center;">
-		<!-- Navigation Menu -->
-		<nav>
-    <ul>
-      <li><a href="index.html"class="active"><i class="fas fa-home"></i>Home</a> </li>
-	  <li><a href="Music.html"><i class="fa fa-music"></i>Music</a></li>
-	  <li><a href="video.html"><i class="fa fa-film"></i>Movies</a></li>
-	  <li><a href="story.html"><i class="fas fa-pen-nib"></i>Stories</a></li>
-      <li><a href="about.html"><i class="fas fa-user"></i>About</a></li>
-      <li><a href="contact.html"><i class="fas fa-envelope"></i>Contact</a></li>
-    </ul>
-  </nav>
-  <!-- Search Bar -->
-  <form id="search-form">
-    <input type="search" id="search-input" placeholder="Search...">
-    <button type="submit">Search</button>
-  </form>
-  <nav>
-<!-- ... -->
-</nav>
-<div class="logo">
-<a href="index.html">
-<img src="logo.jpg" alt="Your Website Logo">
-</a>
-</div>
-  <ul class="social-media-links">
-<li><a href="#" target="_blank"><i class="fab fa-twitter"></i>Twitter</a></li>
-<li><a href="https://www.facebook.com/richesbosseswealthy" target="_blank"><i class="fab fa-facebook"></i>Facebook</a></li>
-<li><a href="https://www.instagram.com/richesbosses" target="_blank"><i class="fab fa-instagram"></i>Instagram</a></li>
-<li><a href="#" target="_blank"><i class="fab fa-linkedin"></i>LinkedIn</a></li>
-</ul>
-<div class="nav-menu">
-  <div class="nav-lines"
-  onclick="openMenu()">
-    <span class="line"></span>
-    <span class="line"></span>
-    <span class="line"></span>
-  </div>
-  <ul class="nav-links">
-    <li><a href="index.html"class="active"><i class="fas fa-home"></i>Home</a> </li>
-	<li><a href="Music.html"><i class="fa fa-music"></i>Music</a></li>
-	<li><a href="video.html"><i class="fa fa-film"></i>Movies</a></li>
-	<li><a href="story.html"><i class="fas fa-pen-nib"></i>Stories</a></li>
-      <li><a href="about.html"><i class="fas fa-user"></i>About</a></li>
-      <li><a href="contact.html"><i class="fas fa-envelope"></i>Contact</a></li>
-  </ul>
-</div>
+    <video autoplay muted loop id="background-video">
+        <source src="background-video.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
 
+    <header class="mb-4">
+        <nav class="navbar navbar-expand-lg glass-panel mt-3 mx-2 mx-md-4 px-3">
+            <div class="container-fluid">
+                <a class="navbar-brand text-white fw-bold d-flex align-items-center" href="index.html">
+                    <img src="logo.jpg" alt="Logo" width="40" height="40" class="d-inline-block align-text-top me-2 rounded-circle">
+                    RICHES BOSSES
+                </a>
+                
+                <button class="navbar-toggler border-0 text-white" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="bi bi-list fs-2 text-white"></span>
+                </button>
 
-	</header>
-	
-	<body style="background-image: url('log.jpg'); background-size: cover; background-position: center;">
-	
-	<!-- Main Content Section -->
-	<main>
-	<!-- ... -->
-	<div class="carousel">
-<div class="carousel-inner">
-<div class="carousel-item active">
-<a href="https://www.example.com/link1">
-<img src="logo.jpg" alt="Image 1">
-</a>
-</div>
-<div class="carousel-item">
-<a href="https://www.example.com/link2">
-<img src="favicon.png" alt="Image 2">
-</a>
-</div>
-<div class="carousel-item">
-<a href="https://www.example.com/link3">
-<img src="cover.jpg" alt="Image 3">
-</a>
-</div>
-</div>
-</div>
+                <div class="collapse navbar-collapse" id="mainNavbar">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item"><a class="nav-link active" href="index.html"><i class="bi bi-house-door-fill me-1"></i>Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="Music.html"><i class="bi bi-music-note-beamed me-1"></i>Music</a></li>
+                        <li class="nav-item"><a class="nav-link" href="video.html"><i class="bi bi-film me-1"></i>Movies</a></li>
+                        <li class="nav-item"><a class="nav-link" href="story.html"><i class="bi bi-pen-fill me-1"></i>Stories</a></li>
+                        <li class="nav-item"><a class="nav-link" href="about.html"><i class="bi bi-person-fill me-1"></i>About</a></li>
+                        <li class="nav-item"><a class="nav-link" href="contact.html"><i class="bi bi-envelope-fill me-1"></i>Contact</a></li>
+                    </ul>
+                    
+                    <form id="search-form" class="d-flex me-3" role="search">
+                        <input class="form-control me-2 glass-input" type="search" id="search-input" placeholder="Search..." aria-label="Search">
+                        <button class="btn btn-outline-light" type="submit"><i class="bi bi-search"></i></button>
+                    </form>
 
-<script>
-const carouselItems = document.querySelectorAll('.carousel-item');
-let currentActiveIndex = 0;
+                    <div class="social-links d-flex gap-3 mt-3 mt-lg-0">
+                        <a href="#" target="_blank" title="Twitter"><i class="bi bi-twitter-x"></i></a>
+                        <a href="https://www.facebook.com/richesbosseswealthy" target="_blank" title="Facebook"><i class="bi bi-facebook"></i></a>
+                        <a href="https://www.instagram.com/richesbosses" target="_blank" title="Instagram"><i class="bi bi-instagram"></i></a>
+                        <a href="#" target="_blank" title="LinkedIn"><i class="bi bi-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
 
-function changeSlide() {
-carouselItems[currentActiveIndex].classList.remove('active');
-currentActiveIndex = (currentActiveIndex + 1) % carouselItems.length;
-carouselItems[currentActiveIndex].classList.add('active');
-}
+    <main class="container my-5">
+        <div class="row g-4">
+            
+            <div class="col-lg-8">
+                
+                <div id="heroCarousel" class="carousel slide glass-panel p-2 mb-4 shadow" data-bs-ride="carousel" data-aos="fade-up">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active" data-bs-interval="3000">
+                            <a href="https://www.example.com/link1">
+                                <img src="logo.jpg" class="d-block w-100 carousel-img" alt="Slide 1">
+                            </a>
+                        </div>
+                        <div class="carousel-item" data-bs-interval="3000">
+                            <a href="https://www.example.com/link2">
+                                <img src="favicon.png" class="d-block w-100 carousel-img" alt="Slide 2">
+                            </a>
+                        </div>
+                        <div class="carousel-item" data-bs-interval="3000">
+                            <a href="https://www.example.com/link3">
+                                <img src="cover.jpg" class="d-block w-100 carousel-img" alt="Slide 3">
+                            </a>
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
 
-setInterval(changeSlide, 3000);
-</script>
-	<!-- ... -->
-<div class="tabs">
-<div class="tab-links">
-<button class="tab-link active" data-tab="tab-1">Tab 1</button>
-<button class="tab-link" data-tab="tab-2">Tab 2</button>
-<button class="tab-link" data-tab="tab-3">Tab 3</button>
-</div>
-<div class="tab-content">
-<div class="tab-pane active" id="tab-1">Tab 1 content</div>
-<div class="tab-pane" id="tab-2">Tab 2 content</div>
-<div class="tab-pane" id="tab-3">Tab 3 content</div>
-</div>
-</div>
+                <div class="glass-panel p-4 mb-4 shadow" data-aos="fade-up">
+                    <ul class="nav nav-tabs mb-3" id="glassTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active text-white" id="tab1-tab" data-bs-toggle="tab" data-bs-target="#tab1-pane" type="button" role="tab">Tab 1</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link text-white" id="tab2-tab" data-bs-toggle="tab" data-bs-target="#tab2-pane" type="button" role="tab">Tab 2</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link text-white" id="tab3-tab" data-bs-toggle="tab" data-bs-target="#tab3-pane" type="button" role="tab">Tab 3</button>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="glassTabContent">
+                        <div class="tab-pane fade show active" id="tab1-pane" role="tabpanel">Tab 1 dynamic rich content details go here.</div>
+                        <div class="tab-pane fade" id="tab2-pane" role="tabpanel">Tab 2 dynamic liquid responsive interface text.</div>
+                        <div class="tab-pane fade" id="tab3-pane" role="tabpanel">Tab 3 embedded systems structural element setup.</div>
+                    </div>
+                </div>
 
-	<!-- ... -->
-  <div id="search-results"></div>
-  
-		<aside>
-    <h3>Recent Posts</h3>
-    <ul>
-      <li><a href="#">Post 1</a></li>
-      <li><a href="#">Post 2</a></li>
-      <li><a href="#">Post 3</a></li>
-    </ul>
-  </aside>
-  <article>
-    <h2>Sample Blog Post</h2>
-    <p>This is a sample blog post. You can add your own content here.</p>
-  </article>
-  
-   <!-- ... -->
-<button class="cta">Read More</button>
-<!-- ... -->
-<div class="gcse-search"></div>
-	</main>
-	
-<script async src="https://cse.google.com/cse.js?cx=420c3d10abf914cf9">
-</script>
-<script>
-  const searchForm = document.getElementById('search-form');
-  const searchInput = document.getElementById('search-input');
+                <div id="search-results" class="mb-4 text-warning fw-bold"></div>
 
-  searchForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const searchTerm = searchInput.value.trim();
-    if (searchTerm) {
-      // TO DO: implement search functionality here
-      console.log(Searching for: ${searchTerm});
-    }
-  });
-</script>	
-<script>
-const tabLinks = document.querySelectorAll('.tab-link');
-const tabPanes = document.querySelectorAll('.tab-pane');
+                <article class="glass-panel glass-card-interactive p-4 mb-4 shadow" data-aos="fade-up">
+                    <h2 class="mb-3 border-bottom pb-2 text-white">Sample Blog Post</h2>
+                    <p class="text-white-50 leading-relaxed">This is a sample blog post enhanced with liquid glass design structures. You can customize details and append high definition parameters flawlessly inside this responsive flex alignment structure.</p>
+                    <button class="btn btn-light rounded-pill px-4 fw-semibold mt-2">Read More</button>
+                </article>
 
-tabLinks.forEach((link) => {
-link.addEventListener('click', () => {
-const tabId = link.getAttribute('data-tab');
-const tabPane = document.querySelector(#${tabId});
+                <div class="gcse-search mb-4"></div>
 
-  tabLinks.forEach((link) => link.classList.remove('active'));
-  link.classList.add('active');
+                <div class="glass-panel p-4 mb-4 shadow" data-aos="fade-up">
+                    <label for="phone" class="form-label text-white fw-bold">International Phone Validation</label>
+                    <input type="tel" id="phone" class="form-control glass-input" placeholder="+1234567890">
+                    <div id="phone-feedback" class="mt-2 small"></div>
+                </div>
+            </div>
 
-  tabPanes.forEach((pane) => pane.classList.remove('active'));
-  tabPane.classList.add('active');
-});
-});
-</script>
+            <div class="col-lg-4">
+                <aside class="glass-panel glass-card-interactive p-4 mb-4 shadow" data-aos="fade-left">
+                    <h3 class="h5 mb-3 border-bottom pb-2"><i class="bi bi-journal-text me-2"></i>Recent Posts</h3>
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none nav-link p-0"><i class="bi bi-chevron-right me-1 small"></i> Post 1 Title Selection</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none nav-link p-0"><i class="bi bi-chevron-right me-1 small"></i> Post 2 Creative Media</a></li>
+                        <li><a href="#" class="text-white-50 text-decoration-none nav-link p-0"><i class="bi bi-chevron-right me-1 small"></i> Post 3 Masterful Elements</a></li>
+                    </ul>
+                </aside>
+            </div>
+            
+        </div>
+    </main>
 
+    <footer class="glass-panel mx-2 mx-md-4 my-4 p-4 text-center shadow">
+        <div class="social-links d-flex justify-content-center gap-4 mb-3">
+            <a href="#" target="_blank"><i class="bi bi-twitter-x"></i></a>
+            <a href="https://www.facebook.com/richesbosseswealthy" target="_blank"><i class="bi bi-facebook"></i></a>
+            <a href="https://www.instagram.com/richesbosses" target="_blank"><i class="bi bi-instagram"></i></a>
+            <a href="#" target="_blank"><i class="bi bi-linkedin"></i></a>
+        </div>
+        <p class="mb-0 text-white-50">&copy; 2026 Riches Bosses Blog. All rights reserved.</p>
+    </footer>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/libphonenumber-js/1.0.6/libphonenumber-js.min.js"></script>
-<script>
-const phoneInput = document.querySelector('#phone');
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 800,
+            once: true
+        });
+    </script>
 
-phoneInput.addEventListener('input', () => {
-const phoneNumber = phoneInput.value;
-const phoneUtil = libphonenumber.PhoneNumberUtil.getInstance();
-try {
-const phoneNumberObject = phoneUtil.parseAndKeepRawInput(phoneNumber);
-if (phoneUtil.isValidNumber(phoneNumberObject)) {
-console.log('Valid phone number');
-} else {
-console.log('Invalid phone number');
-}
-} catch (error) {
-console.log('Error parsing phone number');
-}
-});
-</script>
-	
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
-<script>
-$(document).ready(function(){
-$('.slider').slick({
-autoplay: true,
-autoplaySpeed: 3000,
-dots: true,
-});
-});
-</script>
-	<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-<script>
-AOS.init();
-</script>
-	
-	
-	
-	<!-- Footer Section -->
-	<footer>
-		<!-- ... -->
-<ul class="social-media-links">
-<li><a href="#" target="_blank"><i class="fab fa-twitter"></i>Twitter</a></li>
-<li><a href="https://www.facebook.com/richesbosseswealthy" target="_blank"><i class="fab fa-facebook"></i>Facebook</a></li>
-<li><a href="https://www.instagram.com/richesbosses" target="_blank"><i class="fab fa-instagram"></i>Instagram</a></li>
-<li><a href="#" target="_blank"><i class="fab fa-linkedin"></i>LinkedIn</a></li>
-</ul>
-<p>&copy; 2025 Riches Bosses Blog. All rights reserved.</p>
-	</footer>
-	
+    <script async src="https://cse.google.com/cse.js?cx=420c3d10abf914cf9"></script>
+
+    <script>
+        // Custom search framework handling hook
+        document.getElementById('search-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const searchInput = document.getElementById('search-input');
+            const resultsDiv = document.getElementById('search-results');
+            const searchTerm = searchInput.value.trim();
+            
+            if (searchTerm) {
+                resultsDiv.innerHTML = `<i class="bi bi-hourglass-split me-1"></i> Searching for: ${searchTerm}...`;
+                console.log(`Searching for: ${searchTerm}`);
+            }
+        });
+
+        // Phone Validation Interceptor Logic setup using local Fallback handling 
+        const phoneInput = document.querySelector('#phone');
+        const phoneFeedback = document.querySelector('#phone-feedback');
+
+        if(phoneInput) {
+            phoneInput.addEventListener('input', () => {
+                const phoneNumber = phoneInput.value.trim();
+                // Basic pattern matching validation matching dynamic setups natively
+                const phonePattern = /^\+?[1-9]\d{1,14}$/; 
+                
+                if (phoneNumber === "") {
+                    phoneFeedback.innerHTML = "";
+                } else if (phonePattern.test(phoneNumber)) {
+                    phoneFeedback.className = "text-success mt-2 small";
+                    phoneFeedback.innerHTML = '<i class="bi bi-check-circle-fill me-1"></i> Valid format structure detected';
+                } else {
+                    phoneFeedback.className = "text-danger mt-2 small";
+                    phoneFeedback.innerHTML = '<i class="bi bi-exclamation-triangle-fill me-1"></i> Invalid structure format';
+                }
+            });
+        }
+    </script>
 </body>
 </html>
