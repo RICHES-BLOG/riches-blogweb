@@ -1,311 +1,451 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Riches Blog Stories</title>
-<link rel="stylesheet" href="styles.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riches Blog Stories</title>
+    <link rel="icon" type="image/x-icon" href="favicon.jpg">
+    
+    <!-- Bootstrap 5.3.2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+
+    <style>
+        /* Base Liquid-Glass Background Styling */
+        body {
+            background: linear-gradient(135deg, #090d16 0%, #111827 50%, #1e1b4b 100%) no-repeat center center fixed;
+            background-size: cover;
+            color: #f3f4f6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Glassmorphism Structural Cards */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(18px) saturate(130%);
+            -webkit-backdrop-filter: blur(18px) saturate(130%);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 24px;
+            box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.5);
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        /* Liquid Glass Card Interactivity */
+        .story-card-interactive {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .story-card-interactive::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent,
+                rgba(255, 255, 255, 0.02) 40%,
+                rgba(255, 255, 255, 0.15) 50%,
+                transparent 60%
+            );
+            transform: rotate(35deg) translate(-50%, -50%);
+            transition: none;
+            pointer-events: none;
+        }
+
+        .story-card-interactive:hover::before {
+            transform: rotate(35deg) translate(50%, 50%);
+            transition: transform 0.95s ease-in-out;
+        }
+
+        .story-card-interactive:hover {
+            transform: translateY(-4px);
+            background: rgba(255, 255, 255, 0.09);
+            border-color: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 16px 48px 0 rgba(0, 0, 0, 0.6);
+        }
+
+        /* Navigation Aesthetic Settings */
+        .nav-link {
+            color: rgba(255, 255, 255, 0.7) !important;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #ffffff !important;
+            text-shadow: 0 0 10px rgba(255,255,255,0.5);
+        }
+
+        /* Media Layout Tweaks */
+        .story-img-wrapper {
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+            max-height: 450px;
+        }
+        
+        .story-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .author-picture {
+            width: 48px;
+            height: 48px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        /* Utilities */
+        .social-links a {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.3rem;
+            transition: transform 0.3s, color 0.3s;
+            display: inline-block;
+        }
+        .social-links a:hover {
+            color: #ffffff;
+            transform: scale(1.2);
+        }
+
+        .story-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.85);
+            white-space: pre-line; /* Preserves natural line breaks of story transcripts */
+        }
+    </style>
 </head>
-<body>
-<header>
-<nav>
-<ul>
-<li><a href="index.html"><i class="fas fa-home"></i>Home</a> </li>
-	    <li><a href="Music.html"><i class="fa fa-music"></i>Music</a></li>
-		 <li><a href="video.html"><i class="fa fa-film"></i>Movies</a></li>
-		 <li><a href="story.html"class="active"><i class="fas fa-pen-nib"></i>Stories</a></li>
-      <li><a href="about.html"><i class="fas fa-user"></i>About</a></li>
-      <li><a href="contact.html"><i class="fas fa-envelope"></i>Contact</a></li>
-</ul>
-</nav>
+<body id="top">
 
-<div class="nav-menu">
-  <div class="nav-lines">
-    <span class="line"></span>
-    <span class="line"></span>
-    <span class="line"></span>
-  </div>
-  <ul class="nav-links">
-    <li><a href="index.html"class="active"><i class="fas fa-home"></i>Home</a> </li>
-	<li><a href="Music.html"><i class="fa fa-music"></i>Music</a></li>
-	 <li><a href="video.html"><i class="fa fa-film"></i>Movies</a></li>
-	 <li><a href="story.html"><i class="fas fa-pen-nib"></i>Stories</a></li>
-      <li><a href="about.html"><i class="fas fa-user"></i>About</a></li>
-      <li><a href="contact.html"><i class="fas fa-envelope"></i>Contact</a></li>
-  </ul>
-</div>
+    <!-- Header / Custom Nav Control -->
+    <header class="mb-4">
+        <nav class="navbar navbar-expand-lg glass-panel mt-3 mx-2 mx-md-4 px-3">
+            <div class="container-fluid">
+                <a class="navbar-brand text-white fw-bold" href="index.html">RICHES-BLOG</a>
+                
+                <button class="navbar-toggler border-0 text-white" type="button" data-bs-toggle="collapse" data-bs-target="#storiesNavbar" aria-controls="storiesNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="bi bi-list fs-2 text-white"></span>
+                </button>
 
-</header>
-                    <!-- MAIN SECTION -->
+                <div class="collapse navbar-collapse" id="storiesNavbar">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-1">
+                        <li class="nav-item"><a class="nav-link" href="index.html"><i class="bi bi-house-door-fill me-1"></i>Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="Music.html"><i class="bi bi-music-note-beamed me-1"></i>Music</a></li>
+                        <li class="nav-item"><a class="nav-link" href="video.html"><i class="bi bi-film me-1"></i>Movies</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="story.html"><i class="bi bi-pen-fill me-1"></i>Stories</a></li>
+                        <li class="nav-item"><a class="nav-link" href="about.html"><i class="bi bi-person-fill me-1"></i>About</a></li>
+                        <li class="nav-item"><a class="nav-link" href="contact.html"><i class="bi bi-envelope-fill me-1"></i>Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
 
-<main>
+    <!-- Main Content Container Framework -->
+    <main class="container my-5" style="max-width: 850px;">
+        
+        <!-- ARTICLE ONE -->
+        <article class="glass-panel story-card-interactive p-4 p-md-5 mb-5 shadow-lg">
+            <header class="mb-4 text-center text-md-start">
+                <h1 class="h2 fw-bold text-white tracking-wide mb-3">TEARS OF LOVE😥🌷</h1>
+                
+                <figure class="my-4">
+                    <div class="story-img-wrapper shadow-sm mb-2">
+                        <img src="story-image1.jpg" alt="Story Image">
+                    </div>
+                    <figcaption class="text-center text-white-50 small mt-2">TEARS OF LOVE'😥🌷 ( CHAPTER ONE )</figcaption>
+                </figure>
+            </header>
 
+            <!-- Text Content Wrap -->
+            <div class="story-text px-1 px-md-2">
+                "Hello Mister!
+                A voice came from behind me and I immediately turned around.
 
-<article class="story-article">
-<h1>TEARS OF LOVE😥🌷</h1>
-<figure>
-<img src="story-image1.jpg" alt="Story Image">
-<figcaption>TEARS OF LOVE'😥🌷 ( CHAPTER ONE )</figcaption>
-</figure>
+                On turning around I saw a young boy of 15 years standing looking fearlessly with his face brushed and you can see some scars on his face..
 
+                Just looking at him I knew he was involved in a fight and so I didn't say anything to him.
 
-<p> "Hello Mister!
-A voice came from behind me and I immediately turned around.
+                I was repairing a car and so I focused on my work instead...
 
-On turning around I saw a young boy of 15 years standing looking fearlessly with his face brushed and you can see some scars on his face..
+                The young boy moved to the other side and stood right at my front..
 
-Just looking at him I knew he was involved in a fight and so I didn't say anything to him.
+                Mister, I wanna learn how to fight.
+                He voiced voiced out immediately looking at me.
 
-I was repairing a car and so I focused on my work instead...
+                I wanna learn how to dodge, move as quickly as you did the other day and kick the enemies heavily...
+                He kept talking and demonstrating with his hands while I was busy with my work as though I wasn't even hearing what he was talking about...
 
-The young boy moved to the other side and stood right at my front..
+                Just few days ago I saved him From some gangsters who almost broke all his bones, but he never learned anything from that, and here he is asking me to teach him how to fight.....
 
-Mister, I wanna learn how to fight.
-He voiced voiced out immediately looking at me.
+                He kept talking by himself until he got tired and then realized that I wasn't even paying attention to him...
 
-I wanna learn how to dodge, move as quickly as you did the other day and kick the enemies heavily...
-He kept talking and demonstrating with his hands while I was busy with my work as though I wasn't even hearing what he was talking about...
+                Hello Mister! Can you please hear please hear me out?
+                He voiced out at the top of his voice..
 
-Just few days ago I saved him From some gangsters who almost broke all his bones, but he never learned anything from that, and here he is asking me to teach him how to fight.....
+                I stopped and looked at him for some moment..
 
-He kept talking by himself until he got tired and then realized that I wasn't even paying attention to him...
+                " Can you please get me a screwdriver over there?
+                I voiced out pointing my fingers..
 
-Hello Mister! Can you please hear please hear me out?
-He voiced out at the top of his voice..
+                He went and brought me the screwdriver and then started talking again...
 
-I stopped and looked at him for some moment..
+                " Like I was saying, I want to learn how to dodge quickly and move......
 
-" Can you please get me a screwdriver over there?
-I voiced out pointing my fingers..
+                He was still talking when I voiced out..
 
-He went and brought me the screwdriver and then started talking again...
+                " Can you please hand me that spanner?.
 
-" Like I was saying, I want to learn how to dodge quickly and move......
+                He looked at me and then went and brought the spanner...
 
-He was still talking when I voiced out..
+                " Thank you.
+                I voiced out innocently
 
-" Can you please hand me that spanner?.
+                He remained silent for some moment before he started talking again...
 
-He looked at me and then went and brought the spanner...
+                I was busy repairing the car that was before and not even paying attention to what he was saying...
 
-" Thank you.
-I voiced out innocently
+                Few minutes later I turned to him again..
 
-He remained silent for some moment before he started talking again...
+                " Excuse me, get me that Hammer please.
+                I pointed out innocently.
 
-I was busy repairing the car that was before and not even paying attention to what he was saying...
+                This time around he looked totally upset, " I'm talking about something else and you are asking me to bring this, bring that, won't you listen to me?.
 
-Few minutes later I turned to him again..
+                He was talking angrily while looking at me, I was just staring at him as well without saying anything.
 
-" Excuse me, get me that Hammer please.
-I pointed out innocently.
+                Finally he moved and brought the Hammer, " thank you, I voice out trying to get the hammer from him, but he was still holding it strongly..
 
-This time around he looked totally upset, " I'm talking about something else and you are asking me to bring this, bring that, won't you listen to me?.
+                " Can you please teach me?
+                He voiced out innocently.
 
-He was talking angrily while looking at me, I was just staring at him as well without saying anything.
+                I looked at him..
+                " I'm sorry, as you can see, the only thing I can teach you is how to repair vehicles, I don't teach how to fight and I'm not a fighter.
+                I voiced out innocently and then took the hammer off his hands....
 
-Finally he moved and brought the Hammer, " thank you, I voice out trying to get the hammer from him, but he was still holding it strongly..
+                " Come on man, I knew you used to be a gangster, I saw you fighting the other day.
 
-" Can you please teach me?
-He voiced out innocently.
+                " Just tell me how much you want, I'm gonna pay you that, I just wanna learn how to defend myself..
+                He kept talking...
 
-I looked at him..
-" I'm sorry, as you can see, the only thing I can teach you is how to repair vehicles, I don't teach how to fight and I'm not a fighter.
-I voiced out innocently and then took the hammer off his hands....
+                I didn't say anything and when he got tired he walked away by himself...
 
-" Come on man, I knew you used to be a gangster, I saw you fighting the other day.
+                Immediately he left, I stopped what I was doing and walked out of the garage just to look at him as he was going on his way..
 
-" Just tell me how much you want, I'm gonna pay you that, I just wanna learn how to defend myself..
-He kept talking...
+                The boy reminded me of myself when I was just 15 years old like him.
+                At that age I was a member of a gang even though I was still in high school, I moved around with big guys playing big boy and spending money any how.
 
-I didn't say anything and when he got tired he walked away by himself...
+                Who knew I would end up working in a garage when my colleagues are driving cars and living in big houses happily married with children....
 
-Immediately he left, I stopped what I was doing and walked out of the garage just to look at him as he was going on his way..
+                The one thing about life is that when other's are regretting, others are walking that same road unknowingly...
 
-The boy reminded me of myself when I was just 15 years old like him.
-At that age I was a member of a gang even though I was still in high school, I moved around with big guys playing big boy and spending money any how.
+                I just looked at him and went back to finish my work....
 
-Who knew I would end up working in a garage when my colleagues are driving cars and living in big houses happily married with children....
+                I owned a small garage around the neighborhood and of course that was the source of my income, behind my garage there is a small space and that is my house, so I stayed in the garage all the time unless I got a call to repair something somewhere...
 
-The one thing about life is that when other's are regretting, others are walking that same road unknowingly...
+                The next day early in the morning I woke up and washed my face then opened the gate to my garage..
 
-I just looked at him and went back to finish my work....
+                Surprisedly, this young boy was standing at the gate with his uniform and waiting for me to open the garage..
 
-I owned a small garage around the neighborhood and of course that was the source of my income, behind my garage there is a small space and that is my house, so I stayed in the garage all the time unless I got a call to repair something somewhere...
+                Good morning Mister, he voiced out immediately I opened the garage.
 
-The next day early in the morning I woke up and washed my face then opened the gate to my garage..
+                I looked at him and didn't say anything, I walked back into the garage to arrange something things..
 
-Surprisedly, this young boy was standing at the gate with his uniform and waiting for me to open the garage..
+                The young boy walked after me and when I stopped he also stopped.
 
-Good morning Mister, he voiced out immediately I opened the garage.
+                I turned and looked at him, ' young man, what do you want here when your colleagues are in school?.
+                I asked innocently looking at him.
 
-I looked at him and didn't say anything, I walked back into the garage to arrange something things..
+                " I told you I want to learn how to fight like you, I want to learn how to defend myself against the opponents..
+                He replied and continue....
 
-The young boy walked after me and when I stopped he also stopped.
+                I'm really gonna pay back, just teach me how to defend myself...
 
-I turned and looked at him, ' young man, what do you want here when your colleagues are in school?.
-I asked innocently looking at him.
+                I looked at him without knowing what to say, I just walked away and continue with my work...
 
-" I told you I want to learn how to fight like you, I want to learn how to defend myself against the opponents..
-He replied and continue....
+                He stood there and won't leave and I didn't say anything to him, because I know that whatever I say won't make him leave unless I agree with him...
 
-I'm really gonna pay back, just teach me how to defend myself...
+                Few minutes later he brought out a pack of cigarette from his pocket, took one and placed it in his mouth, he then reached out for a lighter...
 
-I looked at him without knowing what to say, I just walked away and continue with my work...
+                Just as he was about to light the cigarette, I walked to him and pulled off the cigarette from his mouth..
 
-He stood there and won't leave and I didn't say anything to him, because I know that whatever I say won't make him leave unless I agree with him...
+                " I'm sorry, but you can't spoke here.
+                I voiced out innocently.
 
-Few minutes later he brought out a pack of cigarette from his pocket, took one and placed it in his mouth, he then reached out for a lighter...
+                " Huh! Sorry, you should have place a sign that says no smoking...
+                He voiced out laughing..
 
-Just as he was about to light the cigarette, I walked to him and pulled off the cigarette from his mouth..
+                Just hearing him, I could tell that he was lacking much from home training and definitely he needed help otherwise he will end up like me...
 
-" I'm sorry, but you can't spoke here.
-I voiced out innocently.
+                That same day he stayed with me in the garage without leaving until school closed before he walked away.
 
-" Huh! Sorry, you should have place a sign that says no smoking...
-He voiced out laughing..
+                Just like the time, I walked after him while he was leaving just to look at him once again..
 
-Just hearing him, I could tell that he was lacking much from home training and definitely he needed help otherwise he will end up like me...
+                He kept looking at him until he was out of sight, I walked back into my garage and continue with my work....
 
-That same day he stayed with me in the garage without leaving until school closed before he walked away.
+                The following day he came back again, this Time around he came after school was closed..
 
-Just like the time, I walked after him while he was leaving just to look at him once again..
+                While he was standing, I walked to him and placed a written note next to him, that says " NO SMOKING HERE PLEASE".
 
-He kept looking at him until he was out of sight, I walked back into my garage and continue with my work....
+                When he saw that he couldn't help it but to laugh out slowly...
 
-The following day he came back again, this Time around he came  after school was closed..
+                Through out that week he never stop coming to my garage and whenever he came, he will asked me to teach him how to fight....
 
-While he was standing, I walked to him and placed a written note next to him, that says " NO SPOKING HERE PLEASE".
+                So one evening when it was getting dark and he wasn't leaving..
 
-When he saw that he couldn't help it but to laugh out slowly...
+                I finished all my work and was about to close the garage, yet he was still standing...
 
-Through out that week he never stop coming to my garage and whenever he came,  he will asked me to teach him how to fight....
+                I came feeling this feeling in me that came disturbing me and couldn't just sent him away..
 
-So one evening when it was getting dark and he wasn't leaving..
+                So I invited him to come with me and he gladly followed me while smiling...
 
-I finished all my work and was about to close the garage, yet he was still standing...
+                We walked to the back of the garage where I was staying, the place was a bit beautiful and he kept looking around..
 
-I came feeling this feeling in me that came disturbing me and couldn't just sent him away..
+                " Waw! You got a nice place over here..he voiced out looking around.
 
-So I invited him to come with me and he gladly followed me while smiling...
+                I brought him a cup of coffee and as he was drinking I asked him...
 
-We walked to the back of the garage where I was staying, the place was a bit beautiful and he kept looking around..
+                " What is your doing for a living?.
 
-" Waw! You got a nice place over here..he voiced out looking around.
+                " I don't have one.
+                He replied immediately.
 
-I brought him a cup of coffee and as he was drinking I asked him...
+                " What do you mean by that?
+                I asked innocently.
 
-" What is your doing for a living?.
+                " Well, I don't have a father.
 
-" I don't have one.
-He replied immediately.
+                " Huh! 
+                That was all o could voiced out.
+                I was thinking his father was dead, but he said he simply doesn't have one which means he didn't know his father..
 
-" What do you mean by that?
-I asked innocently.
+                " What about your mom?
+                I asked innocently.
 
-" Well, I don't have a father.
+                " She is married abroad and staying with her husband..
 
-" Huh! 
-That was all o could voiced out.
-I was thinking his father was dead, but he said he simply doesn't have one which means he didn't know his father..
+                Wonderful!🤦
 
-" What about your mom?
-I asked innocently.
+                " Huh!
+                And you are staying with?
+                I asked once again.
 
-" She is married abroad and staying with her husband..
+                " With Grandma and Grandpa.
+                He replied...
 
-Wonderful!🤦
+                On hearing that I understood why he was behaving the way he was...
 
-" Huh!
-And you are staying with?
-I asked once again.
+                I remained silent for some moment..
 
-" With Grandma and Grandpa.
-He replied...
+                " So, are you gonna teach me how to fight?
+                He asked...
 
-On hearing that I understood why he was behaving the way he was...
+                Friend, why do you wanna learn how to fight?
+                I asked innocently looking at him.
 
-I remained silent for some moment..
+                He started saying one thing after another demonstrating with his hands as though he was in a movie...
 
-" So, are you gonna teach me how to fight?
-He asked...
+                After he was done talking, I looked at him sadly...
 
-Friend, why do you wanna learn how to fight?
-I asked innocently looking at him.
+                And do you think there is any gain in fighting?.
 
-He started saying one thing after another demonstrating with his hands as though he was in a movie...
+                Just look at me, you said it yourself that I used to be a gangster...
 
-After he was done talking, I looked at him sadly...
+                But as you can see, I'm now a mechanic because all these fighting I used to do didn't take me anywhere....
 
-And do you think there is any gain in fighting?.
+                TO BE CONTINUED......
+            </div>
 
-Just look at me, you said it yourself that I used to be a gangster...
+            <footer class="mt-5 pt-3 border-top d-flex align-items-center gap-3">
+                <img src="author-picture1.jpg" alt="Wunam Picture" class="author-picture shadow-sm">
+                <div>
+                    <p class="mb-0 fw-bold text-white">By Wunam</p>
+                    <p class="mb-0 text-white-50 small">Published on January 21, 2025</p>
+                </div>
+            </footer>
+        </article>
 
-But as you can see,  I'm now a mechanic because all these fighting I used to do didn't take me anywhere....
+        <!-- ARTICLE TWO -->
+        <article class="glass-panel story-card-interactive p-4 p-md-5 mb-5 shadow-lg">
+            <header class="mb-4">
+                <h2 class="h3 fw-bold text-white mb-3">Story Title</h2>
+                <figure class="my-4">
+                    <div class="story-img-wrapper shadow-sm mb-2">
+                        <img src="story-image.jpg" alt="Story Image">
+                    </div>
+                    <figcaption class="text-center text-white-50 small mt-2">Image caption...</figcaption>
+                </figure>
+            </header>
 
-TO BE CONTINUED......
-</p>
+            <div class="story-text px-1 px-md-2 mb-4">
+                Story content...
+            </div>
 
+            <footer class="mt-5 pt-3 border-top d-flex align-items-center gap-3">
+                <img src="author-picture.jpg" alt="Riches Bosses Picture" class="author-picture shadow-sm">
+                <div>
+                    <p class="mb-0 fw-bold text-white">By Riches Bosses</p>
+                    <p class="mb-0 text-white-50 small">Published on January 21, 2025</p>
+                </div>
+            </footer>
+        </article>
 
+        <!-- ARTICLE THREE -->
+        <article class="glass-panel story-card-interactive p-4 p-md-5 mb-5 shadow-lg">
+            <header class="mb-4">
+                <h3 class="h3 fw-bold text-white mb-3">Story Title</h3>
+                <figure class="my-4">
+                    <div class="story-img-wrapper shadow-sm mb-2">
+                        <img src="story-image.jpg" alt="Story Image">
+                    </div>
+                    <figcaption class="text-center text-white-50 small mt-2">Image caption...</figcaption>
+                </figure>
+            </header>
 
+            <div class="story-text px-1 px-md-2 mb-4">
+                Story content...
+            </div>
 
-<footer class="author-info">
-<img src="author-picture1.jpg" alt="Author Picture" class="author-picture">
-<p>By <span class="author-name">Wunam</span></p>
-<p>Published on <span class="publish-date">January 21, 2025</span></p>
-</footer>
-</article>
+            <footer class="mt-5 pt-3 border-top d-flex align-items-center gap-3">
+                <img src="author-picture.jpg" alt="Alhassan Abdul Picture" class="author-picture shadow-sm">
+                <div>
+                    <p class="mb-0 fw-bold text-white">By Alhassan Abdul</p>
+                    <p class="mb-0 text-white-50 small">Published on January 21, 2025</p>
+                </div>
+            </footer>
+        </article>
 
+    </main>
 
+    <!-- Footer Segment Configuration -->
+    <footer class="glass-panel mx-2 mx-md-4 my-4 p-4 text-center shadow position-relative">
+        <div class="social-links d-flex justify-content-center gap-4 mb-3">
+            <a href="https://www.x.com/am_deejay_alex" target="_blank" title="X (Twitter)"><i class="bi bi-twitter-x"></i></a>
+            <a href="https://www.facebook.com/richesbosseswealthy" target="_blank" title="Facebook"><i class="bi bi-facebook"></i></a>
+            <a href="https://www.instagram.com/richesbosses" target="_blank" title="Instagram"><i class="bi bi-instagram"></i></a>
+            <a href="https://www.linkedin.com/in/alhassan-abdul-mumin-b4b0a0258" target="_blank" title="LinkedIn"><i class="bi bi-linkedin"></i></a>
+        </div>
+        
+        <p class="mb-0 text-white-50">&copy; 2026 Riches Bosses Blog. All rights reserved.</p>
+        
+        <div class="mt-3">
+            <a href="#top" class="text-white-50 text-decoration-none small hover-white">
+                <i class="bi bi-arrow-up-circle-fill fs-5 align-middle me-1"></i> Back to Top
+            </a>
+        </div>
+    </footer>
 
-<article class="story-article">
-<h2>Story Title</h2>
-<figure>
-<img src="story-image.jpg" alt="Story Image">
-<figcaption>Image caption...</figcaption>
-</figure>
-<p>Story content...</p>
-<footer class="author-info">
-<img src="author-picture.jpg" alt="Author Picture" class="author-picture">
-<p>By <span class="author-name">Riches Bossses</span></p>
-<p>Published on <span class="publish-date">January 21, 2025</span></p>
-</footer>
-</article>
-
-
-
-<article class="story-article">
-<h3>Story Title</h3>
-<figure>
-<img src="story-image.jpg" alt="Story Image">
-<figcaption>Image caption...</figcaption>
-</figure>
-<p>Story content...</p>
-<footer class="author-info">
-<img src="author-picture.jpg" alt="Author Picture" class="author-picture">
-<p>By <span class="author-name">Alhassan Abdul</span></p>
-<p>Published on <span class="publish-date">January 21, 2025</span></p>
-</footer>
-</article>
-<!-- Add more story articles here -->
-</section>
-</main>
-
-
-
-
-<footer>
-<!-- ... -->
-<ul class="social-media-links">
-<li><a href="https://www.x.com/am_deejay_alex" target="_blank"><i class="fab fa-twitter"></i>X</a></li>
-<li><a href="https://www.facebook.com/richesbosseswealthy" target="_blank"><i class="fab fa-facebook"></i>Facebook</a></li>
-<li><a href="https://www.instagram.com/richesbosses" target="_blank"><i class="fab fa-instagram"></i>Instagram</a></li>
-<li><a href="https://www.linkedin.com/in/alhassan-abdul-mumin-b4b0a0258" target="_blank"><i class="fab fa-linkedin"></i>LinkedIn</a></li>
-</ul>
-<p>&copy; 2025 Riches Bosses Blog. All rights reserved.</p>
-<a href="#top"><i class="fa fa-arrow-up"></i> Back to Top</a>
-</footer>
-
-<script src="script.js"></script>
+    <!-- Bootstrap 5.3.2 Bundle JS (Includes Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS Linking -->
+    <script src="script.js"></script>
 
 </body>
 </html>
