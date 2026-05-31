@@ -4,11 +4,16 @@ app = Flask(__name__)
 
 @app.route('/submit', methods=['POST'])
 def submit_form():
-    name = request.form['name']
-    email = request.form['email']
-    message = request.form['message']
+    # Use .get() to avoid KeyErrors if fields are missing
+    name = request.form.get('name')
+    email = request.form.get('email')
+    message = request.form.get('message')
     
-    # Here you can add code to save the form data to a database or send an email
+    # Basic validation
+    if not name or not email or not message:
+        return 'Error: Please fill out all required fields.', 400
+    
+    # TODO: Add logic to save to database, send email, or log the submission
     
     return 'Form submitted successfully!'
 
