@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RICHES BOSSES | Sonic Hub</title>
-    <link rel="icon" type="image/x-icon" href="favicon.jpg">
+    <link class="favicon" rel="icon" type="image/x-icon" href="favicon.jpg">
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
@@ -168,6 +168,10 @@
             background: rgba(255,255,255,0.06);
             border-color: rgba(255,179,71,0.2);
         }
+        .queue-item.active-track {
+            background: rgba(255, 179, 71, 0.05);
+            border-color: rgba(255, 179, 71, 0.3);
+        }
         
         .metadata-badge {
             font-size: 0.75rem;
@@ -258,6 +262,11 @@
         let supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         let activeTrackList = [];
         let currentCategory = 'All';
+        
+        // Playback Sequence Configurations
+        let playMode = 'all'; // Supported play mechanics: 'all' | 'once' | 'repeat'
+        let currentTrackId = null;
+        let isStreamCounted = false;
 
         const audio = document.getElementById('music-audio');
 
@@ -271,17 +280,15 @@
             });
         }
 
-        // Parse explicit path parameters from address vector mapping loops
         function getTrackIdFromURL() {
             const params = new URLSearchParams(window.location.search);
             return params.get('id');
         }
 
-        // Boot and Pull Complete Audio Records Matrix (Upgraded to music_profile)
+        // Fetch Complete Audio Records Matrix
         async function loadAudioLibrary() {
             try {
                 let query = supabase.from('music_profiles').select('*').order('id', { ascending: false });
-                
                 const { data, error } = await query;
                 if(error) throw error;
                 
@@ -294,20 +301,41 @@
             }
         }
 
+        // Return sorted/filtered sub-arrays tracking selected dynamic capsule configurations
+        function getFilteredQueue() {
+            if (currentCategory === 'All') return activeTrackList;
+            return activeTrackList.filter(t => t.category && t.category.toLowerCase().includes(currentCategory.toLowerCase()));
+        }
+
         function renderEcosystem() {
             if(activeTrackList.length === 0) {
                 document.getElementById('masterPlayerDashboard').innerHTML = `<div class="text-muted text-center py-4 w-100">Zero entries exist inside music_profile grid schemas.</div>`;
                 return;
             }
 
-            // Detect targeting vector inputs from address bars or default to head row pointer
             const urlId = getTrackIdFromURL();
             let chosenTrack = activeTrackList.find(t => t.id == urlId);
             if(!chosenTrack) {
                 chosenTrack = activeTrackList[0]; 
             }
 
-            // 1. Inject and Render Active Focused Player Card Panel Frame Components
+            // Sync structural pointer IDs
+            if (currentTrackId !== chosenTrack.id) {
+                currentTrackId = chosenTrack.id;
+                isStreamCounted = false; 
+            }
+
+            // Determine appropriate icon references matching loop policies
+            let modeIcon = 'bi-arrow-repeat';
+            let modeLabel = 'Play All';
+            if (playMode === 'once') {
+                modeIcon = 'bi-play-circle';
+                modeLabel = 'Play Once';
+            } else if (playMode === 'repeat') {
+                modeIcon = 'bi-repeat-1';
+                modeLabel = 'Repeat One';
+            }
+
             const playerDashboard = document.getElementById('masterPlayerDashboard');
             playerDashboard.innerHTML = `
                 <div class="music-cover-wrapper flex-shrink-0 mx-auto">
@@ -321,12 +349,12 @@
                         <p class="text-white-50 mb-2" id="playerArtistElement">${escapeHtml(chosenTrack.artist)}</p>
                     </div>
 
-                    <!-- Dynamic Track Info Displays -->
+                    <!-- Dynamic Track Info Displays (Upgraded from Key/BPM to Genre/Year) -->
                     <div class="d-flex flex-wrap justify-content-center justify-content-md-start gap-2 mb-3">
-                        <span class="badge rounded-pill metadata-badge text-white-50"><i class="bi bi-activity text-gold me-1"></i> BPM: ${escapeHtml(chosenTrack.bpm || '--')}</span>
-                        <span class="badge rounded-pill metadata-badge text-white-50"><i class="bi bi-music-note text-gold me-1"></i> Key: ${escapeHtml(chosenTrack.key || '--')}</span>
+                        <span class="badge rounded-pill metadata-badge text-white-50"><i class="bi bi-music-note-list text-gold me-1"></i> Genre: ${escapeHtml(chosenTrack.genre || 'Hip-Hop')}</span>
+                        <span class="badge rounded-pill metadata-badge text-white-50"><i class="bi bi-calendar-event text-gold me-1"></i> Year: ${escapeHtml(chosenTrack.release_year || '2026')}</span>
                         <span class="badge rounded-pill metadata-badge text-white-50"><i class="bi bi-person-gear text-gold me-1"></i> Prod: ${escapeHtml(chosenTrack.producer || 'RICHES CEO')}</span>
-                        <span class="badge rounded-pill metadata-badge text-white-50"><i class="bi bi-bar-chart text-gold me-1"></i> Streams: ${escapeHtml(chosenTrack.plays || '0')}</span>
+                        <span class="badge rounded-pill metadata-badge text-white-50"><i class="bi bi-bar-chart text-gold me-1"></i> Streams: <span id="stream-display-count">${escapeHtml(chosenTrack.plays || '0')}</span></span>
                     </div>
 
                     <div class="progress-container mb-2" id="progress-container" onclick="scrubAudioTimeline(event)">
@@ -337,10 +365,16 @@
                         <span id="duration-time">0:00</span>
                     </div>
 
-                    <div class="d-flex align-items-center justify-content-center justify-content-md-start gap-3">
+                    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-start gap-2">
                         <button class="btn btn-light rounded-pill px-4 d-flex align-items-center gap-2 fw-semibold" id="play-pause-button" onclick="togglePlayState()">
                             <i class="bi bi-play-fill fs-5" id="play-icon"></i> <span id="play-text">Play</span>
                         </button>
+                        
+                        <!-- Track Queue Execution Strategy Switcher -->
+                        <button class="btn btn-outline-secondary text-white rounded-pill px-3 d-flex align-items-center gap-2" id="play-mode-toggle" onclick="cyclePlaybackMode()" title="Change Play Sequence Layout">
+                            <i class="bi ${modeIcon} text-gold fs-6"></i> <span>${modeLabel}</span>
+                        </button>
+
                         <button class="btn btn-outline-light rounded-pill px-4 d-flex align-items-center gap-2" onclick="triggerSecureDownload('${chosenTrack.audio_url}', '${escapeHtml(chosenTrack.title)}')">
                             <i class="bi bi-cloud-arrow-down fs-5"></i> Download
                         </button>
@@ -348,52 +382,64 @@
                 </div>
             `;
 
-            // Assign resource path directly to browser framework runtime pipeline layers
             if(audio.src !== chosenTrack.audio_url) {
                 audio.src = chosenTrack.audio_url;
                 resetPlayerVisualStates();
+            } else {
+                // If the track matches and it's already running, re-synchronize tracking views
+                updatePlayButtonUI();
             }
 
-            // 2. Render and Display Secondary Releases Queue List
             renderQueueGrid();
         }
 
         function renderQueueGrid() {
             const queueContainer = document.getElementById('musicQueueContainer');
-            
-            // Apply logic-based sorting arrays for classification loops
-            let filtered = activeTrackList;
-            if(currentCategory !== 'All') {
-                filtered = activeTrackList.filter(t => t.category && t.category.toLowerCase().includes(currentCategory.toLowerCase()));
-            }
+            let filtered = getFilteredQueue();
 
             if(filtered.length === 0) {
                 queueContainer.innerHTML = `<div class="text-muted text-center small p-4">No structural matches inside targeted profile class indexes.</div>`;
                 return;
             }
 
-            queueContainer.innerHTML = filtered.map(track => `
-                <div class="queue-item p-3 d-flex align-items-center justify-content-between gap-3">
-                    <div class="d-flex align-items-center gap-3 overflow-hidden" style="cursor:pointer;" onclick="selectTrackNode(${track.id})">
-                        <img src="${track.cover_image || 'cover.jpg'}" class="rounded" width="45" height="45" style="object-fit:cover;">
-                        <div class="text-truncate">
-                            <span class="text-white fw-bold d-block small text-truncate mb-0">${escapeHtml(track.title)}</span>
-                            <small class="text-muted text-truncate d-block">${escapeHtml(track.artist)}</small>
+            queueContainer.innerHTML = filtered.map(track => {
+                const isCurrent = track.id === currentTrackId;
+                return `
+                    <div class="queue-item p-3 d-flex align-items-center justify-content-between gap-3 ${isCurrent ? 'active-track' : ''}">
+                        <div class="d-flex align-items-center gap-3 overflow-hidden" style="cursor:pointer; flex: 1;" onclick="selectTrackNode(${track.id})">
+                            <img src="${track.cover_image || 'cover.jpg'}" class="rounded" width="45" height="45" style="object-fit:cover;">
+                            <div class="text-truncate">
+                                <span class="text-white fw-bold d-block small text-truncate mb-0">${escapeHtml(track.title)}</span>
+                                <small class="text-muted text-truncate d-block">${escapeHtml(track.artist)} &bull; ${escapeHtml(track.genre || 'Hip-Hop')}</small>
+                            </div>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-sm btn-outline-secondary ${isCurrent ? 'btn-gold text-dark' : 'text-gold'} rounded-circle" onclick="selectTrackNode(${track.id})" title="Load and Play">
+                                <i class="bi ${isCurrent && !audio.paused ? 'bi-pause-circle-fill' : 'bi-play-circle'}"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-secondary text-white-50 rounded-circle" onclick="triggerSecureDownload('${track.audio_url}', '${escapeHtml(track.title)}')"><i class="bi bi-download"></i></button>
                         </div>
                     </div>
-                    <div class="d-flex gap-2">
-                        <button class="btn btn-sm btn-outline-secondary text-gold rounded-circle" onclick="selectTrackNode(${track.id})" title="Load to deck"><i class="bi bi-play-circle"></i></button>
-                        <button class="btn btn-sm btn-outline-secondary text-white-50 rounded-circle" onclick="triggerSecureDownload('${track.audio_url}', '${escapeHtml(track.title)}')"><i class="bi bi-download"></i></button>
-                    </div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
         }
 
-        // Live Category Filter Pipeline Configuration Action
+        // Play Mode Cycle State Switcher 
+        window.cyclePlaybackMode = function() {
+            if (playMode === 'all') {
+                playMode = 'once';
+            } else if (playMode === 'once') {
+                playMode = 'repeat';
+            } else {
+                playMode = 'all';
+            }
+            
+            // Re-render engine interface states cleanly
+            renderEcosystem();
+        };
+
         window.filterCategory = function(categoryName) {
             currentCategory = categoryName;
-            
-            // Adjust visualization parameters of pill active matrix indicators
             const pills = document.querySelectorAll('#categoryCapsuleGrid .liquid-pill');
             pills.forEach(pill => {
                 if(pill.textContent.toLowerCase().includes(categoryName.toLowerCase()) || (categoryName === 'All' && pill.textContent.includes('All'))) {
@@ -406,29 +452,102 @@
         };
 
         window.selectTrackNode = function(id) {
+            if (currentTrackId === id) {
+                togglePlayState();
+                return;
+            }
             const targetUrl = new URL(window.location.href);
             targetUrl.searchParams.set('id', id);
             window.history.pushState({}, '', targetUrl);
+            
+            isStreamCounted = false;
             renderEcosystem();
-            setTimeout(() => { togglePlayState(); }, 250);
+            
+            // Auto-trigger playback on selection change
+            audio.play().catch(e => console.log("Playback context startup block:", e));
         };
 
-        // Native Presentation Interaction Framework State Hooks
         window.togglePlayState = function() {
-            const playIcon = document.getElementById('play-icon');
-            const playText = document.getElementById('play-text');
-            
             if (audio.paused) {
-                audio.play().then(() => {
-                    if(playIcon) playIcon.className = 'bi bi-pause-fill fs-5';
-                    if(playText) playText.textContent = 'Pause';
-                }).catch(e => console.log("System block context preventing automatic streaming startup:", e));
+                audio.play().catch(e => console.log("System initialization block context rules dropped play stream request:", e));
             } else {
                 audio.pause();
-                if(playIcon) playIcon.className = 'bi bi-play-fill fs-5';
-                if(playText) playText.textContent = 'Play';
             }
         };
+
+        function updatePlayButtonUI() {
+            const playIcon = document.getElementById('play-icon');
+            const playText = document.getElementById('play-text');
+            if (!playIcon || !playText) return;
+
+            if (!audio.paused) {
+                playIcon.className = 'bi bi-pause-fill fs-5';
+                playText.textContent = 'Pause';
+            } else {
+                playIcon.className = 'bi bi-play-fill fs-5';
+                playText.textContent = 'Play';
+            }
+        }
+
+        // Inline Telemetry Stream Metric Incrementor 
+        async function incrementStreamMetric(trackId) {
+            if (!trackId || isStreamCounted) return;
+            isStreamCounted = true; // Guard variable to stop multiple API counts during active session
+            
+            try {
+                // Execute stored procedure tracking sequence
+                const { error } = await supabase.rpc('increment_play_count', { row_id: trackId });
+                
+                // Fallback architecture to direct patch matrix tracking update if RPC schema declaration fails
+                if (error) {
+                    const trackObj = activeTrackList.find(t => t.id === trackId);
+                    if (trackObj) {
+                        const currentPlays = parseInt(trackObj.plays || 0);
+                        await supabase.from('music_profiles').update({ plays: currentPlays + 1 }).eq('id', trackId);
+                    }
+                }
+                
+                // Update local data state configurations instantly to reflect metrics without forcing full component rebuild
+                const liveTrack = activeTrackList.find(t => t.id === trackId);
+                if (liveTrack) {
+                    liveTrack.plays = (parseInt(liveTrack.plays) || 0) + 1;
+                    const displayCounter = document.getElementById('stream-display-count');
+                    if (displayCounter) displayCounter.textContent = liveTrack.plays;
+                }
+            } catch (err) {
+                console.warn("Telemetry database streaming metrics increment drop:", err);
+            }
+        }
+
+        // Core Sequential Continuous Playback Handler Rule Vector
+        function handleTrackPlaybackEnded() {
+            if (playMode === 'repeat') {
+                audio.currentTime = 0;
+                audio.play().catch(e => console.log(e));
+                return;
+            }
+
+            let currentQueue = getFilteredQueue();
+            let currentIndex = currentQueue.findIndex(t => t.id === currentTrackId);
+
+            if (playMode === 'once') {
+                resetPlayerVisualStates();
+                updatePlayButtonUI();
+                renderQueueGrid();
+                return;
+            }
+
+            if (playMode === 'all' && currentIndex !== -1) {
+                let nextIndex = currentIndex + 1;
+                // Loop around queue indexing arrays smoothly
+                if (nextIndex >= currentQueue.length) {
+                    nextIndex = 0; 
+                }
+                
+                const nextTrack = currentQueue[nextIndex];
+                selectTrackNode(nextTrack.id);
+            }
+        }
 
         window.scrubAudioTimeline = function(e) {
             const progressContainer = document.getElementById('progress-container');
@@ -448,7 +567,22 @@
             if(currentEl) currentEl.textContent = '0:00';
         }
 
-        // Realtime Streaming Core Playback Calculations
+        // Framework Media Listeners Interceptors
+        audio.addEventListener('play', () => {
+            updatePlayButtonUI();
+            renderQueueGrid();
+            incrementStreamMetric(currentTrackId); // Fires stream increment cleanly on play action
+        });
+
+        audio.addEventListener('pause', () => {
+            updatePlayButtonUI();
+            renderQueueGrid();
+        });
+
+        audio.addEventListener('ended', () => {
+            handleTrackPlaybackEnded();
+        });
+
         audio.addEventListener('timeupdate', () => {
             const progressBar = document.getElementById('progress-bar');
             const currentTimeEl = document.getElementById('current-time');
@@ -475,12 +609,10 @@
             return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
         }
 
-        // Programmatic Secure Asset Data Retrieval Pipeline
         window.triggerSecureDownload = async function(url, filename) {
             if(!url) return;
             try {
-                // Instantly increment static tracking data parameters inside database metrics rows
-                const urlId = getTrackIdFromURL() || (activeTrackList[0] ? activeTrackList[0].id : null);
+                const urlId = currentTrackId || (activeTrackList[0] ? activeTrackList[0].id : null);
                 if(urlId) {
                     await supabase.rpc('increment_play_count', { row_id: urlId }).catch(() => {});
                 }
@@ -497,12 +629,10 @@
                 document.body.removeChild(link);
                 window.URL.revokeObjectURL(blobUrl);
             } catch (err) {
-                // Standard direct fallback strategy path routing
                 window.open(url, '_blank');
             }
         };
 
-        // Boot Pipeline Integration Cycle Execution
         loadAudioLibrary();
     </script>
 </body>
