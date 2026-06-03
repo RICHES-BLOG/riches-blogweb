@@ -431,9 +431,9 @@
                 document.getElementById('masterLiveBlogContainer').innerHTML = `<div class="alert alert-danger bg-dark text-danger border-danger small">Write stream failure connecting to 'blog_posts' relational system schema.</div>`;
             }
 
-            // 2. POPULATE LIVE AUDIO TAB RELEASES
+            // 2. POPULATE LIVE AUDIO TAB RELEASES (Upgraded to music_profile & Rich Telemetry)
             try {
-                const { data: music, error } = await supabase.from('music').select('*').order('id', { ascending: false }).limit(6);
+                const { data: music, error } = await supabase.from('music_profile').select('*').order('id', { ascending: false }).limit(6);
                 const musicTarget = document.getElementById('liveMusicFeed');
                 if(error) throw error;
 
@@ -441,15 +441,22 @@
                     musicTarget.innerHTML = music.map(track => `
                         <div class="col-md-6">
                             <div class="p-3 rounded-3" style="background:rgba(0,0,0,0.25); border:1px solid rgba(255,255,255,0.05)">
-                                <div class="d-flex align-items-center gap-3">
-                                    <div class="bg-dark rounded d-flex align-items-center justify-content-center" style="width:50px; height:50px; flex-shrink:0;">
-                                        <i class="bi bi-disc text-gold fs-3"></i>
+                                <div class="d-flex align-items-start gap-3">
+                                    <div class="bg-dark rounded d-flex align-items-center justify-content-center mt-1" style="width:50px; height:50px; flex-shrink:0; border: 1px solid rgba(255,255,255,0.05);">
+                                        ${track.cover_image ? `<img src="${track.cover_image}" class="img-fluid rounded" style="width:100%; height:100%; object-fit:cover;">` : `<i class="bi bi-disc text-gold fs-3"></i>`}
                                     </div>
-                                    <div class="overflow-hidden">
-                                        <span class="text-white fw-bold d-block text-truncate mb-0" style="font-size:0.95rem;">${escapeHtml(track.title)}</span>
-                                        <span class="text-white-50 small d-block text-truncate">${escapeHtml(track.artist)}</span>
+                                    <div class="overflow-hidden flex-grow-1">
+                                        <span class="text-white fw-bold d-block text-truncate mb-0" style="font-size:0.95rem; cursor:pointer;" onclick="location.href='Music.html?id=${track.id}'">${escapeHtml(track.title)}</span>
+                                        <span class="text-white-50 small d-block text-truncate mb-2">${escapeHtml(track.artist)}</span>
+                                        
+                                        <!-- Inline Telemetry Array -->
+                                        <div class="d-flex flex-wrap gap-2" style="font-size: 0.72rem; color: rgba(255,255,255,0.45);">
+                                            <span><i class="bi bi-activity text-gold"></i> ${escapeHtml(track.bpm || '--')} BPM</span>
+                                            <span><i class="bi bi-music-note text-gold"></i> Key: ${escapeHtml(track.key || '--')}</span>
+                                            <span class="text-truncate" style="max-width: 120px;"><i class="bi bi-person-gear text-gold"></i> ${escapeHtml(track.producer || 'RICHES CEO')}</span>
+                                        </div>
                                     </div>
-                                    <span class="ms-auto small text-muted text-nowrap"><i class="bi bi-play-fill text-warning"></i> ${track.play_count || 0}</span>
+                                    <span class="small text-muted text-nowrap pt-1"><i class="bi bi-bar-chart text-warning me-1"></i>${track.plays || 0}</span>
                                 </div>
                             </div>
                         </div>
