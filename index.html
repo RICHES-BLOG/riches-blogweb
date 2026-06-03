@@ -3,22 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RICHES BOSSES BLOG</title>
+    <title>RICHES BOSSES | Digital Portal</title>
     <link rel="icon" type="image/x-icon" href="favicon.png">
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.43.4/dist/umd/supabase.js"></script>
 
     <style>
-        /* Base Liquid-Glass Styling */
+        /* Deep Cosmic Glass Base Layer Architecture */
         body {
-            background: url('log.jpg') no-repeat center center fixed;
+            background: linear-gradient(135deg, #050714 0%, #0a0d22 50%, #120f35 100%) no-repeat center center fixed;
             background-size: cover;
-            color: #ffffff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #f3f4f6;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
             overflow-x: hidden;
+            min-height: 100vh;
         }
 
         #background-video {
@@ -29,157 +31,196 @@
             min-height: 100%;
             z-index: -100;
             object-fit: cover;
-            opacity: 0.6;
+            opacity: 0.25;
+            filter: saturate(120%) blur(2px);
+            pointer-events: none;
         }
 
-        /* Glassmorphism Core */
+        /* Glassmorphic Panel Foundations */
         .glass-panel {
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(16px) saturate(120%);
-            -webkit-backdrop-filter: blur(16px) saturate(120%);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 16px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px) saturate(140%);
+            -webkit-backdrop-filter: blur(20px) saturate(140%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.4);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* Liquid Glass / Fluid hover gloss effect */
+        /* Interactive Liquid Glass Cards */
         .glass-card-interactive {
             position: relative;
             overflow: hidden;
         }
 
-        .glass-card-interactive::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(
-                45deg,
-                transparent,
-                rgba(255, 255, 255, 0.1) 45%,
-                rgba(255, 255, 255, 0.3) 50%,
-                transparent 55%
-            );
-            transform: rotate(30deg) translate(-50%, -50%);
-            transition: none;
-            pointer-events: none;
-        }
-
-        .glass-card-interactive:hover::before {
-            transform: rotate(30deg) translate(50%, 50%);
-            transition: transform 0.8s ease-in-out;
-        }
-
         .glass-card-interactive:hover {
-            transform: translateY(-5px) scale(1.01);
-            background: rgba(255, 255, 255, 0.13);
-            border-color: rgba(255, 255, 255, 0.3);
-            box-shadow: 0 12px 40px 0 rgba(255, 255, 255, 0.1);
+            transform: translateY(-6px);
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 215, 120, 0.25);
+            box-shadow: 0 20px 40px rgba(255, 179, 71, 0.05);
         }
 
-        /* Form Controls Customization */
+        /* Premium Form Controls */
         .glass-input {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(0, 0, 0, 0.3) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
             color: #fff !important;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 12px 18px;
+            transition: all 0.3s ease;
         }
 
         .glass-input:focus {
-            background: rgba(255, 255, 255, 0.15);
-            border-color: rgba(255, 255, 255, 0.4);
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 179, 71, 0.5) !important;
+            box-shadow: 0 0 20px rgba(255, 179, 71, 0.15) !important;
+            background: rgba(0, 0, 0, 0.4) !important;
         }
 
         .glass-input::placeholder {
-            color: rgba(255, 255, 255, 0.6);
+            color: rgba(255, 255, 255, 0.4);
         }
 
-        /* Nav links & custom updates */
-        .nav-link {
-            color: rgba(255, 255, 255, 0.75) !important;
-            transition: color 0.3s;
+        /* Text Accents & Typography */
+        .text-gold {
+            color: #FFD778 !important;
+            text-shadow: 0 0 12px rgba(255, 215, 120, 0.15);
         }
+
+        .btn-gold {
+            background: linear-gradient(135deg, #FFB347 0%, #FFCC67 100%);
+            border: none;
+            color: #050714 !important;
+            font-weight: 700;
+            border-radius: 12px;
+            padding: 12px 24px;
+            box-shadow: 0 4px 15px rgba(255, 179, 71, 0.25);
+            transition: all 0.3s ease;
+        }
+
+        .btn-gold:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 179, 71, 0.4);
+            filter: brightness(1.05);
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.65) !important;
+            font-weight: 500;
+            padding: 10px 16px !important;
+            transition: all 0.3s ease;
+        }
+
         .nav-link:hover, .nav-link.active {
-            color: #ffffff !important;
-            text-shadow: 0 0 8px rgba(255,255,255,0.6);
+            color: #FFD778 !important;
+            text-shadow: 0 0 10px rgba(255, 215, 120, 0.3);
         }
 
         .social-links a {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 1.25rem;
-            transition: transform 0.3s, color 0.3s;
-            display: inline-block;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            width: 40px;
+            height: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
         }
 
         .social-links a:hover {
-            color: #ffffff;
-            transform: scale(1.2);
+            color: #050714;
+            background: #FFB347;
+            transform: scale(1.1) rotate(360deg);
+            box-shadow: 0 0 15px rgba(255, 179, 71, 0.4);
         }
 
-        /* Tabs styling adjustment */
+        /* Glass Tabs Setup */
         .nav-tabs {
-            border-bottom: 1px solid rgba(255,255,255,0.15);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            gap: 8px;
         }
+
         .nav-tabs .nav-link {
-            border: none !important;
+            border: 1px solid transparent !important;
+            border-radius: 10px 10px 0 0;
             background: transparent !important;
         }
+
         .nav-tabs .nav-link.active {
-            border-bottom: 2px solid #fff !important;
-            color: #fff !important;
+            background: rgba(255, 255, 255, 0.04) !important;
+            border-color: rgba(255,255,255,0.08) rgba(255,255,255,0.08) transparent !important;
+            color: #FFD778 !important;
+            border-bottom: 2px solid #FFB347 !important;
         }
 
-        /* Carousel Image Tuning */
         .carousel-img {
-            height: 400px;
+            height: 450px;
             object-fit: cover;
-            border-radius: 12px;
+            border-radius: 14px;
+            filter: brightness(0.85);
         }
+
+        .micro-tag {
+            background: rgba(255, 179, 71, 0.1);
+            color: #FFD778;
+            border: 1px solid rgba(255, 179, 71, 0.2);
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .spinner {
+            animation: spin 1s linear infinite;
+            color: #FFB347;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
     <video autoplay muted loop id="background-video">
         <source src="background-video.mp4" type="video/mp4">
-        Your browser does not support the video tag.
     </video>
 
     <header class="mb-4">
-        <nav class="navbar navbar-expand-lg glass-panel mt-3 mx-2 mx-md-4 px-3">
+        <nav class="navbar navbar-expand-lg glass-panel mt-3 mx-2 mx-md-4 px-3 py-3">
             <div class="container-fluid">
-                <a class="navbar-brand text-white fw-bold d-flex align-items-center" href="index.html">
-                    <img src="logo.jpg" alt="Logo" width="40" height="40" class="d-inline-block align-text-top me-2 rounded-circle">
-                    RICHES BOSSES
+                <a class="navbar-brand text-white fw-bold d-flex align-items-center gap-2" href="index.html">
+                    <img src="logo.jpg" alt="Logo" width="42" height="42" class="d-inline-block align-text-top rounded-circle border border-secondary">
+                    <span style="letter-spacing: 0.5px;">RICHES <span class="text-gold">BOSSES</span></span>
                 </a>
                 
-                <button class="navbar-toggler border-0 text-white" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="bi bi-list fs-2 text-white"></span>
+                <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="bi bi-list fs-1 text-white"></span>
                 </button>
 
                 <div class="collapse navbar-collapse" id="mainNavbar">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item"><a class="nav-link active" href="index.html"><i class="bi bi-house-door-fill me-1"></i>Home</a></li>
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-3">
+                        <li class="nav-item"><a class="nav-link active" href="index.html"><i class="bi bi-house-door me-1"></i>Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="Music.html"><i class="bi bi-music-note-beamed me-1"></i>Music</a></li>
                         <li class="nav-item"><a class="nav-link" href="video.html"><i class="bi bi-film me-1"></i>Movies</a></li>
-                        <li class="nav-item"><a class="nav-link" href="story.html"><i class="bi bi-pen-fill me-1"></i>Stories</a></li>
-                        <li class="nav-item"><a class="nav-link" href="about.html"><i class="bi bi-person-fill me-1"></i>About</a></li>
-                        <li class="nav-item"><a class="nav-link" href="contact.html"><i class="bi bi-envelope-fill me-1"></i>Contact</a></li>
+                        <li class="nav-item"><a class="nav-link" href="story.html"><i class="bi bi-pen me-1"></i>Stories</a></li>
+                        <li class="nav-item"><a class="nav-link" href="about.html"><i class="bi bi-info-circle me-1"></i>About</a></li>
+                        <li class="nav-item"><a class="nav-link" href="contact.html"><i class="bi bi-envelope me-1"></i>Contact</a></li>
                     </ul>
                     
                     <form id="search-form" class="d-flex me-3" role="search">
-                        <input class="form-control me-2 glass-input" type="search" id="search-input" placeholder="Search..." aria-label="Search">
-                        <button class="btn btn-outline-light" type="submit"><i class="bi bi-search"></i></button>
+                        <div class="input-group">
+                            <input class="form-control glass-input form-control-sm" type="search" id="search-input" placeholder="Search catalogs..." aria-label="Search">
+                            <button class="btn btn-outline-light border-secondary" type="submit"><i class="bi bi-search"></i></button>
+                        </div>
                     </form>
 
-                    <div class="social-links d-flex gap-3 mt-3 mt-lg-0">
-                        <a href="#" target="_blank" title="Twitter"><i class="bi bi-twitter-x"></i></a>
+                    <div class="social-links d-flex gap-2 mt-3 mt-lg-0">
+                        <a href="#" target="_blank" title="X"><i class="bi bi-twitter-x"></i></a>
                         <a href="https://www.facebook.com/richesbosseswealthy" target="_blank" title="Facebook"><i class="bi bi-facebook"></i></a>
                         <a href="https://www.instagram.com/richesbosses" target="_blank" title="Instagram"><i class="bi bi-instagram"></i></a>
-                        <a href="#" target="_blank" title="LinkedIn"><i class="bi bi-linkedin"></i></a>
                     </div>
                 </div>
             </div>
@@ -191,22 +232,14 @@
             
             <div class="col-lg-8">
                 
-                <div id="heroCarousel" class="carousel slide glass-panel p-2 mb-4 shadow" data-bs-ride="carousel" data-aos="fade-up">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active" data-bs-interval="3000">
-                            <a href="https://www.example.com/link1">
-                                <img src="logo.jpg" class="d-block w-100 carousel-img" alt="Slide 1">
-                            </a>
-                        </div>
-                        <div class="carousel-item" data-bs-interval="3000">
-                            <a href="https://www.example.com/link2">
-                                <img src="favicon.png" class="d-block w-100 carousel-img" alt="Slide 2">
-                            </a>
-                        </div>
-                        <div class="carousel-item" data-bs-interval="3000">
-                            <a href="https://www.example.com/link3">
-                                <img src="cover.jpg" class="d-block w-100 carousel-img" alt="Slide 3">
-                            </a>
+                <div id="heroCarousel" class="carousel slide glass-panel p-2 mb-5 shadow" data-bs-ride="carousel" data-aos="fade-up">
+                    <div class="carousel-inner" id="carouselDynamicTarget">
+                        <div class="carousel-item active">
+                            <img src="cover.jpg" class="d-block w-100 carousel-img" alt="Slide Base">
+                            <div class="carousel-caption d-none d-md-block" style="background: rgba(0,0,0,0.5); backdrop-filter: blur(10px); border-radius:12px;">
+                                <h5>Welcome to Riches Bosses Hub</h5>
+                                <p>Streaming media catalogs directly from live cloud data nodes seamlessly.</p>
+                            </div>
                         </div>
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
@@ -219,50 +252,60 @@
                     </button>
                 </div>
 
-                <div class="glass-panel p-4 mb-4 shadow" data-aos="fade-up">
-                    <ul class="nav nav-tabs mb-3" id="glassTab" role="tablist">
+                <div class="glass-panel p-4 mb-5 shadow" data-aos="fade-up">
+                    <h3 class="h5 fw-bold mb-4 text-gold d-flex align-items-center gap-2">
+                        <i class="bi bi-cpu-fill"></i> DATABASE CORE TELEMETRY RELEASES
+                    </h3>
+                    <ul class="nav nav-tabs mb-4" id="glassTab" role="tablist">
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link active text-white" id="tab1-tab" data-bs-toggle="tab" data-bs-target="#tab1-pane" type="button" role="tab">Tab 1</button>
+                            <button class="nav-link active" id="audio-tab" data-bs-toggle="tab" data-bs-target="#audio-pane" type="button" role="tab"><i class="bi bi-music-note"></i> Audio Tracks</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link text-white" id="tab2-tab" data-bs-toggle="tab" data-bs-target="#tab2-pane" type="button" role="tab">Tab 2</button>
+                            <button class="nav-link" id="cinema-tab" data-bs-toggle="tab" data-bs-target="#cinema-pane" type="button" role="tab"><i class="bi bi-film"></i> Cinema Streams</button>
                         </li>
                         <li class="nav-item" role="presentation">
-                            <button class="nav-link text-white" id="tab3-tab" data-bs-toggle="tab" data-bs-target="#tab3-pane" type="button" role="tab">Tab 3</button>
+                            <button class="nav-link" id="stories-tab" data-bs-toggle="tab" data-bs-target="#stories-pane" type="button" role="tab"><i class="bi bi-blockquote-left"></i> Mini Log Features</button>
                         </li>
                     </ul>
                     <div class="tab-content" id="glassTabContent">
-                        <div class="tab-pane fade show active" id="tab1-pane" role="tabpanel">Tab 1 dynamic rich content details go here.</div>
-                        <div class="tab-pane fade" id="tab2-pane" role="tabpanel">Tab 2 dynamic liquid responsive interface text.</div>
-                        <div class="tab-pane fade" id="tab3-pane" role="tabpanel">Tab 3 embedded systems structural element setup.</div>
+                        <div class="tab-pane fade show active" id="audio-pane" role="tabpanel">
+                            <div class="row g-3" id="liveMusicFeed"><div class="text-center p-4"><i class="bi bi-arrow-clockwise spinner fs-3"></i></div></div>
+                        </div>
+                        <div class="tab-pane fade" id="cinema-pane" role="tabpanel">
+                            <div class="row g-3" id="liveMoviesFeed"><div class="text-center p-4"><i class="bi bi-arrow-clockwise spinner fs-3"></i></div></div>
+                        </div>
+                        <div class="tab-pane fade" id="stories-pane" role="tabpanel">
+                            <div class="list-group list-group-flush" id="liveTabBlogFeed"><div class="text-center p-4"><i class="bi bi-arrow-clockwise spinner fs-3"></i></div></div>
+                        </div>
                     </div>
                 </div>
 
-                <div id="search-results" class="mb-4 text-warning fw-bold"></div>
+                <div id="search-results" class="mb-4 text-gold fw-bold px-2"></div>
 
-                <article class="glass-panel glass-card-interactive p-4 mb-4 shadow" data-aos="fade-up">
-                    <h2 class="mb-3 border-bottom pb-2 text-white">Sample Blog Post</h2>
-                    <p class="text-white-50 leading-relaxed">This is a sample blog post enhanced with liquid glass design structures. You can customize details and append high definition parameters flawlessly inside this responsive flex alignment structure.</p>
-                    <button class="btn btn-light rounded-pill px-4 fw-semibold mt-2">Read More</button>
-                </article>
-
-                <div class="gcse-search mb-4"></div>
-
-                <div class="glass-panel p-4 mb-4 shadow" data-aos="fade-up">
-                    <label for="phone" class="form-label text-white fw-bold">International Phone Validation</label>
-                    <input type="tel" id="phone" class="form-control glass-input" placeholder="+1234567890">
-                    <div id="phone-feedback" class="mt-2 small"></div>
+                <div id="masterLiveBlogContainer">
+                    <div class="text-center glass-panel p-5"><i class="bi bi-arrow-clockwise spinner fs-1"></i><p class="mt-3 text-muted">Synchronizing network feed arrays...</p></div>
                 </div>
             </div>
 
             <div class="col-lg-4">
+                
                 <aside class="glass-panel glass-card-interactive p-4 mb-4 shadow" data-aos="fade-left">
-                    <h3 class="h5 mb-3 border-bottom pb-2"><i class="bi bi-journal-text me-2"></i>Recent Posts</h3>
-                    <ul class="list-unstyled mb-0">
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none nav-link p-0"><i class="bi bi-chevron-right me-1 small"></i> Post 1 Title Selection</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none nav-link p-0"><i class="bi bi-chevron-right me-1 small"></i> Post 2 Creative Media</a></li>
-                        <li><a href="#" class="text-white-50 text-decoration-none nav-link p-0"><i class="bi bi-chevron-right me-1 small"></i> Post 3 Masterful Elements</a></li>
+                    <h3 class="h5 mb-3 border-bottom pb-3 fw-bold text-gold"><i class="bi bi-journal-text me-2"></i>Narrative Feed Index</h3>
+                    <ul class="list-unstyled mb-0 d-flex flex-column gap-3" id="sidebarRecentPosts">
+                        <li class="text-muted small">Buffering structural entries...</li>
                     </ul>
+                </aside>
+
+                <aside class="glass-panel p-4 mb-4 shadow" data-aos="fade-left" style="background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,179,71,0.03) 100%);">
+                    <h3 class="h5 mb-2 fw-bold text-gold"><i class="bi bi-send-check me-2"></i>Join the Inner Circle</h3>
+                    <p class="text-white-50 small mb-4">Inject your email address below into our ledger pipeline matrix to receive updates on upcoming dynamic data releases.</p>
+                    <form id="newsletterForm">
+                        <div class="mb-3">
+                            <input type="email" id="subscriberEmail" class="form-control glass-input" placeholder="name@domain.com" required>
+                        </div>
+                        <button type="submit" class="btn btn-gold w-100" id="btnSubscribe">Establish Network Connection</button>
+                    </form>
+                    <div id="newsletterFeedback" class="mt-3 small fw-bold"></div>
                 </aside>
             </div>
             
@@ -270,62 +313,258 @@
     </main>
 
     <footer class="glass-panel mx-2 mx-md-4 my-4 p-4 text-center shadow">
-        <div class="social-links d-flex justify-content-center gap-4 mb-3">
+        <div class="social-links d-flex justify-content-center gap-3 mb-3">
             <a href="#" target="_blank"><i class="bi bi-twitter-x"></i></a>
             <a href="https://www.facebook.com/richesbosseswealthy" target="_blank"><i class="bi bi-facebook"></i></a>
             <a href="https://www.instagram.com/richesbosses" target="_blank"><i class="bi bi-instagram"></i></a>
-            <a href="#" target="_blank"><i class="bi bi-linkedin"></i></a>
         </div>
-        <p class="mb-0 text-white-50">&copy; 2026 Riches Bosses Blog. All rights reserved.</p>
+        <p class="mb-0 text-white-50 small">&copy; 2026 RICHES BOSSES ENTERPRISE. All core systems operational.</p>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    
     <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
     <script>
-        AOS.init({
-            duration: 800,
-            once: true
-        });
+        AOS.init({ duration: 900, once: true });
     </script>
 
-    <script async src="https://cse.google.com/cse.js?cx=420c3d10abf914cf9"></script>
-
     <script>
-        // Custom search framework handling hook
-        document.getElementById('search-form').addEventListener('submit', (e) => {
+        const SUPABASE_URL = 'https://kshqtnqtyeqczswxtgdj.supabase.co';  
+        const SUPABASE_ANON_KEY = 'sb_publishable_BiZTbcIXG58BMRoQskCqmg_9zfrVrIs';  
+        
+        let supabase = null;
+
+        function initClient() {
+            try {
+                supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+            } catch(e) {
+                console.error("Critical gateway failure linking client libraries:", e);
+            }
+        }
+
+        // Escape string patterns to avoid cross site scripting vulnerabilities
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.toString().replace(/[&<>]/g, m => {
+                if (m === '&') return '&amp;';
+                if (m === '<') return '&lt;';
+                if (m === '>') return '&gt;';
+                return m;
+            });
+        }
+
+        // Primary Core Async Retrieval Operations Pipeline
+        async function runSyncPipeline() {
+            if(!supabase) return;
+
+            // 1. POPULATE MAIN NARRATIVE BLOG ENGINE FEED
+            try {
+                const { data: posts, error } = await supabase
+                    .from('blog_posts')
+                    .select('*')
+                    .eq('published', true)
+                    .order('id', { ascending: false });
+
+                const blogTarget = document.getElementById('masterLiveBlogContainer');
+                const sidebarTarget = document.getElementById('sidebarRecentPosts');
+                const tabsBlogTarget = document.getElementById('liveTabBlogFeed');
+
+                if (error) throw error;
+
+                if(posts && posts.length > 0) {
+                    // Populate Main Container Area
+                    blogTarget.innerHTML = posts.map(post => `
+                        <article class="glass-panel glass-card-interactive p-4 mb-4 shadow" data-aos="fade-up">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="micro-tag">${escapeHtml(post.category || 'General')}</span>
+                                <small class="text-white-50"><i class="bi bi-calendar3 me-1"></i> ${post.created_at ? new Date(post.created_at).toLocaleDateString() : 'Active Stage'}</small>
+                            </div>
+                            <h2 class="h3 mb-3 text-white fw-bold border-bottom pb-2">${escapeHtml(post.title)}</h2>
+                            ${post.cover_image ? `<img src="${post.cover_image}" class="img-fluid rounded-3 mb-3 w-100" style="max-height:300px; object-fit:cover;" alt="Cover">` : ''}
+                            <p class="text-white-50 lh-lg">${escapeHtml(post.content ? post.content.substring(0, 280) : '')}...</p>
+                            <button class="btn btn-sm btn-gold mt-2 rounded-pill px-4" onclick="location.href='story.html?id=${post.id}'">Analyze Narrative Matrix</button>
+                        </article>
+                    `).join('');
+
+                    // Populate Sidebar Mini Logs
+                    sidebarTarget.innerHTML = posts.slice(0, 5).map(post => `
+                        <li>
+                            <a href="story.html?id=${post.id}" class="text-white-50 text-decoration-none nav-link p-0 d-flex align-items-start gap-2">
+                                <i class="bi bi-chevron-right text-gold mt-1 small"></i> 
+                                <div>
+                                    <span class="text-white fw-semibold d-block">${escapeHtml(post.title)}</span>
+                                    <small class="text-muted" style="font-size:0.75rem;">${escapeHtml(post.category || 'Feed')}</small>
+                                </div>
+                            </a>
+                        </li>
+                    `).join('');
+
+                    // Populate Mini Log Tab Content Window
+                    tabsBlogTarget.innerHTML = posts.slice(0, 4).map(post => `
+                        <div class="list-group-item bg-transparent text-white border-secondary px-0 py-3">
+                            <h6 class="text-gold mb-1 fw-bold">${escapeHtml(post.title)}</h6>
+                            <p class="text-white-50 small mb-0">${escapeHtml(post.content ? post.content.substring(0, 110) : '')}...</p>
+                        </div>
+                    `).join('');
+
+                    // Dynamically map Carousel elements based on posts with cover graphics
+                    const coverPosts = posts.filter(p => p.cover_image);
+                    if(coverPosts.length > 0) {
+                        document.getElementById('carouselDynamicTarget').innerHTML = coverPosts.map((post, index) => `
+                            <div class="carousel-item ${index === 0 ? 'active' : ''}">
+                                <img src="${post.cover_image}" class="d-block w-100 carousel-img" alt="Slide Image">
+                                <div class="carousel-caption" style="background: rgba(5,7,20,0.75); backdrop-filter: blur(12px); border-radius:14px; border: 1px solid rgba(255,255,255,0.08);">
+                                    <span class="micro-tag mb-2 d-inline-block">${escapeHtml(post.category || 'Spotlight')}</span>
+                                    <h4 class="fw-bold text-white">${escapeHtml(post.title)}</h4>
+                                </div>
+                            </div>
+                        `).join('');
+                    }
+
+                } else {
+                    blogTarget.innerHTML = `<div class="glass-panel p-4 text-center text-muted">No dynamic articles are logged live inside the backend stack database grid.</div>`;
+                    sidebarTarget.innerHTML = `<li class="text-muted small">Ledger target void.</li>`;
+                    tabsBlogTarget.innerHTML = `<div class="text-muted small p-2">Index log empty.</div>`;
+                }
+
+            } catch(err) {
+                console.error("Narrative interface drop error:", err);
+                document.getElementById('masterLiveBlogContainer').innerHTML = `<div class="alert alert-danger bg-dark text-danger border-danger small">Write stream failure connecting to 'blog_posts' relational system schema.</div>`;
+            }
+
+            // 2. POPULATE LIVE AUDIO TAB RELEASES
+            try {
+                const { data: music, error } = await supabase.from('music').select('*').order('id', { ascending: false }).limit(6);
+                const musicTarget = document.getElementById('liveMusicFeed');
+                if(error) throw error;
+
+                if(music && music.length > 0) {
+                    musicTarget.innerHTML = music.map(track => `
+                        <div class="col-md-6">
+                            <div class="p-3 rounded-3" style="background:rgba(0,0,0,0.25); border:1px solid rgba(255,255,255,0.05)">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="bg-dark rounded d-flex align-items-center justify-content-center" style="width:50px; height:50px; flex-shrink:0;">
+                                        <i class="bi bi-disc text-gold fs-3"></i>
+                                    </div>
+                                    <div class="overflow-hidden">
+                                        <span class="text-white fw-bold d-block text-truncate mb-0" style="font-size:0.95rem;">${escapeHtml(track.title)}</span>
+                                        <span class="text-white-50 small d-block text-truncate">${escapeHtml(track.artist)}</span>
+                                    </div>
+                                    <span class="ms-auto small text-muted text-nowrap"><i class="bi bi-play-fill text-warning"></i> ${track.play_count || 0}</span>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('');
+                } else {
+                    musicTarget.innerHTML = `<div class="text-muted small p-3">No music entities verified.</div>`;
+                }
+            } catch(e) {
+                document.getElementById('liveMusicFeed').innerHTML = `<span class="text-danger small">Table mapping parsing error inside target layout structure.</span>`;
+            }
+
+            // 3. POPULATE LIVE MOVIES RELEASES TAB
+            try {
+                const { data: movies, error } = await supabase.from('movies').select('*').order('id', { ascending: false }).limit(3);
+                const moviesTarget = document.getElementById('liveMoviesFeed');
+                if(error) throw error;
+
+                if(movies && movies.length > 0) {
+                    moviesTarget.innerHTML = movies.map(movie => `
+                        <div class="col-1120-card mb-2">
+                            <div class="p-3 rounded-3" style="background:rgba(255,255,255,0.02); border-left:4px solid #FFB347;">
+                                <div class="d-flex justify-content-between">
+                                    <h6 class="text-white fw-bold mb-1">${escapeHtml(movie.title)}</h6>
+                                    <span class="badge bg-secondary rounded-pill" style="font-size:0.7rem;">${movie.year || '2026'}</span>
+                                </div>
+                                <p class="text-white-50 small mb-0 text-truncate">${escapeHtml(movie.description || 'No descriptive narrative registered inside structural profile summary context.')}</p>
+                            </div>
+                        </div>
+                    `).join('');
+                } else {
+                    moviesTarget.innerHTML = `<div class="text-muted small p-3">No film entries stored inside cloud grid storage profiles.</div>`;
+                }
+            } catch(e) {
+                document.getElementById('liveMoviesFeed').innerHTML = `<span class="text-danger small">Table mapping parsing failure on 'movies' tracking indexes.</span>`;
+            }
+        }
+
+        // Search Processing Event Interceptor Layout Configuration hook
+        document.getElementById('search-form').addEventListener('submit', async (e) => {
             e.preventDefault();
             const searchInput = document.getElementById('search-input');
             const resultsDiv = document.getElementById('search-results');
             const searchTerm = searchInput.value.trim();
             
-            if (searchTerm) {
-                resultsDiv.innerHTML = `<i class="bi bi-hourglass-split me-1"></i> Searching for: ${searchTerm}...`;
-                console.log(`Searching for: ${searchTerm}`);
+            if (!searchTerm) {
+                resultsDiv.innerHTML = "";
+                runSyncPipeline();
+                return;
+            }
+
+            resultsDiv.innerHTML = `<i class="bi bi-hourglass-split me-1 spinner"></i> Filtering array layers for matching coordinates: "${escapeHtml(searchTerm)}"...`;
+            
+            try {
+                const { data: searchPosts } = await supabase
+                    .from('blog_posts')
+                    .select('*')
+                    .eq('published', true)
+                    .ilike('title', `%${searchTerm}%`);
+
+                const blogTarget = document.getElementById('masterLiveBlogContainer');
+                
+                if(searchPosts && searchPosts.length > 0) {
+                    resultsDiv.innerHTML = `<i class="bi bi-check-circle-fill text-success me-1"></i> Isolated ${searchPosts.length} matches inside the system registry tables.`;
+                    blogTarget.innerHTML = searchPosts.map(post => `
+                        <article class="glass-panel glass-card-interactive p-4 mb-4 shadow">
+                            <span class="micro-tag mb-2 d-inline-block">${escapeHtml(post.category || 'Result')}</span>
+                            <h2 class="h3 mb-3 text-white fw-bold">${escapeHtml(post.title)}</h2>
+                            <p class="text-white-50">${escapeHtml(post.content ? post.content.substring(0, 200) : '')}...</p>
+                            <button class="btn btn-sm btn-gold mt-2" onclick="location.href='story.html?id=${post.id}'">Open Node Document</button>
+                        </article>
+                    `).join('');
+                } else {
+                    resultsDiv.innerHTML = `<i class="bi bi-exclamation-circle-fill text-danger me-1"></i> Zero elements returned matching keyword "${escapeHtml(searchTerm)}".`;
+                    blogTarget.innerHTML = `<div class="glass-panel p-5 text-center text-muted">No database rows match your query filtering strings. Click search with empty input field parameters to clear tracking vectors.</div>`;
+                }
+            } catch(err) {
+                resultsDiv.innerHTML = "Query failure processing filter inputs.";
             }
         });
 
-        // Phone Validation Interceptor Logic setup using local Fallback handling 
-        const phoneInput = document.querySelector('#phone');
-        const phoneFeedback = document.querySelector('#phone-feedback');
+        // High-Fidelity Active Newsletter Subscription Processing Engine pipeline hook
+        document.getElementById('newsletterForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const emailInput = document.getElementById('subscriberEmail');
+            const feedback = document.getElementById('newsletterFeedback');
+            const btn = document.getElementById('btnSubscribe');
+            const emailValue = emailInput.value.trim();
 
-        if(phoneInput) {
-            phoneInput.addEventListener('input', () => {
-                const phoneNumber = phoneInput.value.trim();
-                // Basic pattern matching validation matching dynamic setups natively
-                const phonePattern = /^\+?[1-9]\d{1,14}$/; 
-                
-                if (phoneNumber === "") {
-                    phoneFeedback.innerHTML = "";
-                } else if (phonePattern.test(phoneNumber)) {
-                    phoneFeedback.className = "text-success mt-2 small";
-                    phoneFeedback.innerHTML = '<i class="bi bi-check-circle-fill me-1"></i> Valid format structure detected';
-                } else {
-                    phoneFeedback.className = "text-danger mt-2 small";
-                    phoneFeedback.innerHTML = '<i class="bi bi-exclamation-triangle-fill me-1"></i> Invalid structure format';
-                }
-            });
-        }
+            feedback.innerHTML = "";
+            btn.disabled = true;
+            btn.innerHTML = `<i class="bi bi-arrow-clockwise spinner me-2"></i> Registering Connection Node...`;
+
+            try {
+                // Pipe elements directly into target subscribers relational table architecture
+                const { error } = await supabase
+                    .from('subscribers')
+                    .insert([{ email: emailValue, subscribed_at: new Date().toISOString() }]);
+
+                if (error) throw error;
+
+                feedback.className = "mt-3 small fw-bold text-success text-center";
+                feedback.innerHTML = `<i class="bi bi-shield-check-fill me-1"></i> Channel established! Entry registered securely inside cloud nodes.`;
+                emailInput.value = "";
+            } catch(error) {
+                feedback.className = "mt-3 small fw-bold text-danger text-center";
+                feedback.innerHTML = `<i class="bi bi-x-octagon-fill me-1"></i> Injection denied: ${escapeHtml(error.message || 'Row collision structure anomaly.')}`;
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = "Establish Network Connection";
+            }
+        });
+
+        // Initialize Runtime Matrix Boot Cycle
+        initClient();
+        runSyncPipeline();
     </script>
 </body>
 </html>
